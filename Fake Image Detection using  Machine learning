@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+// Simulate reading an image as grayscale pixels
+// In reality, you would load an image file
+void readImage(int image[5][5]) {
+    // Example: fake image has unusually high pixel values
+    int sample[5][5] = {
+        {255, 254, 255, 254, 255},
+        {254, 255, 254, 255, 254},
+        {255, 254, 255, 254, 255},
+        {254, 255, 254, 255, 254},
+        {255, 254, 255, 254, 255}
+    };
+    for (int i = 0; i < 5; i++)
+        for (int j = 0; j < 5; j++)
+            image[i][j] = sample[i][j];
+}
+// Simple "fake detection" based on average pixel intensity
+int detectFake(int image[5][5]) {
+    int sum = 0;
+    for (int i = 0; i < 5; i++)
+        for (int j = 0; j < 5; j++)
+            sum += image[i][j];
+    float avg = sum / 25.0;
+    // Threshold: if avg pixel intensity > 200, mark as fake
+    if (avg > 200)
+        return 1; // Fake
+    else
+        return 0; // Real
+}
+int main() {
+    int image[5][5];    
+    readImage(image);    
+    int result = detectFake(image);
+    if (result)
+        printf("ALERT: Image detected as FAKE.\n");
+    else
+        printf("Image is REAL.\n");    
+    return 0;
+}
